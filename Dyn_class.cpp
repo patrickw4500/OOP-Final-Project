@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+//This is a test!
 
 Dyn_class::Dyn_class() {
 	cout << "must implement Dynclass ctor" << endl;
