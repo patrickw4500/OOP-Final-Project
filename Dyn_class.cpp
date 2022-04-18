@@ -13,3 +13,4 @@ void Dyn_class::add_func() {
 	cout << "must implement Dynclass add_func" << endl;
 
 }//TODO: add param f 
+
