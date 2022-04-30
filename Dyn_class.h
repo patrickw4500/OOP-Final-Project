@@ -8,11 +8,16 @@ public:
 	Dyn_class(); 
 	void remove_func(); 
 	void add_func(); 
+	void use_func();
+	bool findMatch(string);
 
 private:
 	// DATA STRUCTURE
 	////////////////////JOHN's proposal ///////////////////
-	//std:: map< string, vector<any> > storage; 
+	// map < *function name*, arguments
+	map< string, vector<any> > storage; 
+	
+	
 	
 
 
