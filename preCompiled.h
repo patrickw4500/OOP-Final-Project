@@ -1,8 +1,8 @@
 #pragma once
-using namespace std;
-#include <map>
-#include <iostream>
-#include <functional>
-#include <iostream>
-#include <vector>
-#include <any>
+using namespace std; // for std
+#include <map> // maps
+#include <functional> // for functional and bind
+#include <iostream> // input/output
+#include <vector> // vector
+#include <any> // any
+#include <iomanip> // spacing (ex. setw)
