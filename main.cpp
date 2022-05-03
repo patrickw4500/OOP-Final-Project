@@ -1,24 +1,12 @@
 #include "Dyn_class.h"
-//ostream& operator<<(ostream& out, const vector<any>& a)
-//{
-//
-//    for (int i = 0; i < a->size(); i++)
-//    {
-//        out << a[i] << " ";
-//    }
-//    return out;
-//}
+#include "functions.h"
 
 
-int func(int a, int b, int c)
-{
-    cout << a << " " << b << " " << c << endl;
-    return a;
-}
 
 int main()
 {
-    Dyn_class x;
+    DynamicClass obj; // vector of any to store the function pointers
+
     int input = -1;
 
     while (input != 0)
@@ -37,33 +25,102 @@ int main()
 
         if (input == 1)
         {
-            x.add_func();
+        
         }
         else if (input == 2)
         {
-            x.use_func();
+            
         }
         else if (input == 3)
         {
-            x.remove_func();
+            
         }
     }
+
     
 
+    // function pointer
+        // add
+    obj.AddFunction("functionPoint1", func1);
+        // get type
+    auto printNumReturn = (obj.GetFunction("functionPoint1"));
+    std::cout << printNumReturn.type().name() << std::endl;
+        // print
+    auto printNumReturnCast = std::any_cast<int(*)(int)>(printNumReturn);
+    std::cout << printNumReturnCast(5) << std::endl;
 
 
 
-    auto fn1 = bind(func, 1, 2, 3);
-    auto fn2 = bind(func, 2, 1, 3);
-    //^ problem: how to let users input their parameters
-    //          ask them when they add function? so that when we use the function, we already have the arguments
-    // probably cannot have functions with the same name (shouldnt matter since we dont deal with overloading)
 
-    // calling of modified functions
-    int i = fn1();
-    fn2();
+    // normal funcitons 
+        //add
+    obj.AddFunction("valueOfPi", pi);
+        // get type
+    auto myfunc = (obj.GetFunction("valueOfPi"));
+    std::cout << myfunc.type().name() << std::endl;
+        // print
+    auto myfunc2 = std::any_cast<float(*)()>(obj.GetFunction("valueOfPi"));
+    std::cout << myfunc2() << std::endl;
 
-    cout << i;
+
+
+
+    // fuction object
+        // declare object
+    square sqt;
+        // add
+    obj.AddFunction("funObj", sqt);
+        //get type
+    auto funObjRet = (obj.GetFunction("funObj"));
+    std::cout << funObjRet.type().name() << std::endl;
+        // print
+    auto funObjRetCast = std::any_cast<square>(funObjRet);
+    std::cout << funObjRetCast(5) << std::endl;
+
+
+
+
+    // std::function
+        // declare object
+    Plus add;
+        // add
+    obj.AddFunction("addFunction", add);
+        // get type
+    auto addFunObjRet = (obj.GetFunction("addFunction"));
+    std::cout << addFunObjRet.type().name() << std::endl;
+        // print
+    auto addFunObjRetCast = std::any_cast<Plus>(addFunObjRet);
+    std::cout << addFunObjRetCast(5, 5) << std::endl;
+
+
+
+
+    // std::bind
+    std::function<int(int)> bindFunc = std::bind(&RetOne, _1);
+        // add
+    obj.AddFunction("binder", bindFunc);
+        // get type
+    auto bindedFuncRec = (obj.GetFunction("binder"));
+    std::cout << bindedFuncRec.type().name() << std::endl;
+        // print
+    auto bindFuncCast = std::any_cast<std::function<int __cdecl(int)>>(bindedFuncRec);
+    std::cout << bindFuncCast(7) << std::endl;
+
+
+
+
+    // lambda 
+    std::function<int(int)> lam = [](int x) { return 3 * x; };
+        // add
+    obj.AddFunction("lambda", lam);
+        // get type
+    auto lambdaRec = (obj.GetFunction("lambda"));
+    std::cout << lambdaRec.type().name() << std::endl;
+        // print
+    auto lambdaRecCast = std::any_cast<std::function<int __cdecl(int)>>(lambdaRec);
+    std::cout << lambdaRecCast(5) << std::endl;
+
+
 
     return 0;
 }
